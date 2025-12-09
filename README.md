@@ -36,7 +36,7 @@ Url-Shortner/
 │   ├── controllers/     # request handlers
 │   ├── middleware/      # auth, rate-limit, plan-check
 │   ├── models/          # User, Url schemas
-│   ├── routes/          
+│   ├── routes/
 │   ├── service/         # business logic
 │   ├── utils/ai.js      # Gemini API helper
 │   ├── connection.js
