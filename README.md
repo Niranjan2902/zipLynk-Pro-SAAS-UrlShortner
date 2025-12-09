@@ -29,31 +29,6 @@ A modern, scalable URL shortener with **Free** (5 links) and **Pro** (unlimited 
 - Frontend → Vercel
 - Backend → Render / Railway
 
-## Project Structure
-```
-Url-Shortner/
-├── backend/
-│   ├── controllers/     # request handlers
-│   ├── middleware/      # auth, rate-limit, plan-check
-│   ├── models/          # User, Url schemas
-│   ├── routes/
-│   ├── service/         # business logic
-│   ├── utils/ai.js      # Gemini API helper
-│   ├── connection.js
-│   ├── server.js
-│   ├── .env             # ← NEVER commit this
-│   └── package.json
-├── client/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/       # Landing, Login, Dashboard, Analytics
-│   │   ├── App.js
-│   │   └── index.css
-│   ├── tailwind.config.js
-│   └── package.json
-├── README.md
-└── .gitignore
-```
 
 ## Local Development Setup
 
