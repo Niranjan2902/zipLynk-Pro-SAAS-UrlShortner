@@ -1,35 +1,21 @@
-📘 ZipLynk Pro – AI-Powered MERN URL Shortener
+ZipLynk Pro – AI-Powered URL Shortener (MERN SaaS)
 
-A full-stack SaaS URL shortener featuring user tiers (Free: 5 URLs, Pro: Unlimited), real-time analytics, QR generation, and AI-powered traffic insights using Gemini API. Built for scale with secure JWT auth, MongoDB access rules, and a responsive React + Tailwind UI.
-
-🧱 Project Structure
-Url-Shortner/
-├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── service/
-│   ├── utils/             # AI helpers (ai.js)
-│   ├── connection.js
-│   ├── server.js
-│   ├── .env               # (ignored in Git)
-│   └── package.json
-├── client/
-│   ├── public/
-│   └── src/
-│       ├── components/    # Navbar, charts, cards
-│       ├── pages/         # Landing, Login, Dashboard, Analytics
-│       ├── App.js
-│       ├── index.js
-│       └── index.css
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
-│   └── package.json
-├── README.md
-└── .gitignore
+A modern, scalable URL shortener with user tiers (Free: 5 URLs, Pro: Unlimited), real-time analytics, QR generation, and AI-powered traffic summaries using Google Gemini API.
+Designed as a SaaS platform with secure JWT authentication and optimized MongoDB access rules.
 
 🚀 Tech Stack
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB + Mongoose
+
+JWT Auth
+
+Gemini API (AI summaries)
+
 Frontend
 
 React.js
@@ -40,78 +26,135 @@ qrcode.react
 
 Recharts (analytics)
 
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB + Mongoose
-
-JWT Authentication
-
-AI
-
-Gemini API – generates human-readable traffic summaries for Pro users only
-
 Deployment
 
 Frontend: Vercel
 
-Backend: Render / Railway / VPS
+Backend: Render / Railway
+
+📁 Folder Structure
+Url-Shortner/
+├── backend/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── service/
+│   ├── utils/              # AI helpers (ai.js)
+│   ├── connection.js
+│   ├── server.js
+│   ├── .env                # ignored from Git
+│   └── package.json
+├── client/
+│   ├── public/
+│   └── src/
+│       ├── components/     # Navbar, charts, cards
+│       ├── pages/          # Landing, Login, Dashboard, Analytics
+│       ├── App.js
+│       ├── index.js
+│       └── index.css
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   └── package.json
+├── README.md
+└── .gitignore
 
 🛠️ Local Setup
 1. Install MongoDB
 
-Official guide: https://www.mongodb.com/docs/manual/installation/
+MongoDB installation guide:
+https://www.mongodb.com/docs/manual/installation/
 
-2. Clone + Install All Dependencies
-git clone <repo-url>
+2. Clone & Install Dependencies
+git clone <your-repo-ssh-url>
 cd Url-Shortner
 npm run install:all
 
 
-(Ensure your root package.json has an install:all script running both client & backend Installs.)
+(install:all should install backend + client packages.)
 
 3. Environment Variables
 
-Inside backend/, create:
+Create a file:
 
 backend/.env
 
 
 Add:
 
-MONGODB_URI=your_mongo_uri
-JWT_SECRET=your_jwt_secret
-GEMINI_API_KEY=your_gemini_key
+MONGODB_URI=
+JWT_SECRET=
+GEMINI_API_KEY=
 BASE_URL=http://localhost:8000
 
 
-⚠️ Never push .env to GitHub.
-See explanation below.
+⚠️ .env is NOT pushed to Git.
+It is protected via .gitignore + removed using:
+git rm --cached backend/.env
 
 4. Start Development
 npm run dev
 
 
-Backend: http://localhost:8000
+Backend → localhost:8000
 
-Frontend: http://localhost:5173
+Frontend → localhost:5173
 
 5. Test the App
 
-Sign up → login → create short URLs
+Signup → Login
 
-Scan QR / visit link → analytics updates in dashboard
+Shorten URLs
 
-Pro account → test AI summary generation
+Scan QR or open short links → watch analytics update in real time
+
+Upgrade to Pro → test AI traffic summaries
 
 📡 API Endpoints
-Method	Route	Description	Auth
-POST	/api/user	Signup	None
-POST	/api/user/login	Login	None
-GET	/api/dashboard	User stats + URLs	JWT
-POST	/api/url/shorten	Create short link	JWT + Tier limit
-GET	/api/url/analytics/:id	Click analytics	JWT
-POST	/api/ai/summary	AI insights (Gemini)	Pro + JWT
+Method	Endpoint	Description	Auth
+POST	/api/user	Signup	❌
+POST	/api/user/login	Login	❌
+GET	/api/dashboard	Fetch user URLs + stats	✅ JWT
+POST	/api/url/shorten	Create short URL	✅ JWT + tier limit
+GET	/api/url/analytics/:id	Click analytics	✅ JWT
+POST	/api/ai/summary	AI-generated insight	🔒 Pro + JWT
+🖼️ Screenshots
+
+Place screenshots inside /screenshots folder.
+
+![Landing](screenshots/landing.png)
+![Dashboard](screenshots/dashboard.png)
+
+🚀 Deploy
+Frontend — Vercel
+cd client
+npm run build
+
+
+Upload build → or import Git repo → deploy.
+
+Backend — Render / Railway
+
+Push repository
+
+Create new Web Service
+
+Add environment variables (MONGODB_URI, JWT_SECRET, GEMINI_API_KEY)
+
+Deploy
+
+🔐 How to Avoid Pushing .env (IMPORTANT)
+
+Add to .gitignore:
+
+backend/.env
+
+
+Remove from Git tracking:
+
+git rm --cached backend/.env
+
+
+Commit:
+
+git commit -m "Remove .env from tracking"
