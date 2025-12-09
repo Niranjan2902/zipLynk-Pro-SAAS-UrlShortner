@@ -47,8 +47,7 @@ cp backend/.env.example backend/.env
 
 ### Required Environment Variables (`backend/.env`)
 ```env
-PORT=8000
-MONGODB_URI=your_mongodb_atlas_uri
+PORT=8001
 JWT_SECRET=your_strong_secret_here
 GEMINI_API_KEY=your_google_gemini_api_key
 BASE_URL=http://localhost:5173
