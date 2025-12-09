@@ -1,160 +1,117 @@
-ZipLynk Pro – AI-Powered URL Shortener (MERN SaaS)
+```markdown
+# ZipLynk Pro – AI-Powered SaaS URL Shortener (MERN Stack)
 
-A modern, scalable URL shortener with user tiers (Free: 5 URLs, Pro: Unlimited), real-time analytics, QR generation, and AI-powered traffic summaries using Google Gemini API.
-Designed as a SaaS platform with secure JWT authentication and optimized MongoDB access rules.
+A modern, scalable URL shortener with **Free** (5 links) and **Pro** (unlimited + AI insights) tiers. Features real-time analytics dashboard, client-side QR codes, and **Google Gemini AI** that instantly turns raw click data into clear, human-readable traffic summaries (Pro-only).
 
-🚀 Tech Stack
-Backend
+## Features
+- JWT-secured authentication & role-based access
+- Free tier: max 5 URLs | Pro tier: unlimited + AI summaries
+- Real-time analytics (clicks, devices, referrers, countries, growth charts)
+- Instant QR code generation (zero backend load)
+- Pro-exclusive AI traffic insights powered by Google Gemini
+- Responsive dashboard built with Tailwind & Recharts
 
-Node.js
+## Tech Stack
+**Frontend**
+- React 18 + Vite
+- Tailwind CSS
+- Recharts (analytics)
+- qrcode.react
+- Lucide React icons
 
-Express.js
+**Backend**
+- Node.js + Express
+- MongoDB Atlas + Mongoose
+- JWT authentication
+- Google Gemini API (AI summaries)
 
-MongoDB + Mongoose
+**Deployment**
+- Frontend → Vercel
+- Backend → Render / Railway
 
-JWT Auth
-
-Gemini API (AI summaries)
-
-Frontend
-
-React.js
-
-Tailwind CSS
-
-qrcode.react
-
-Recharts (analytics)
-
-Deployment
-
-Frontend: Vercel
-
-Backend: Render / Railway
-
-📁 Folder Structure
+## Project Structure
+```
 Url-Shortner/
 ├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── service/
-│   ├── utils/              # AI helpers (ai.js)
+│   ├── controllers/     # request handlers
+│   ├── middleware/      # auth, rate-limit, plan-check
+│   ├── models/          # User, Url schemas
+│   ├── routes/          
+│   ├── service/         # business logic
+│   ├── utils/ai.js      # Gemini API helper
 │   ├── connection.js
 │   ├── server.js
-│   ├── .env                # ignored from Git
+│   ├── .env             # ← NEVER commit this
 │   └── package.json
 ├── client/
-│   ├── public/
-│   └── src/
-│       ├── components/     # Navbar, charts, cards
-│       ├── pages/          # Landing, Login, Dashboard, Analytics
-│       ├── App.js
-│       ├── index.js
-│       └── index.css
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/       # Landing, Login, Dashboard, Analytics
+│   │   ├── App.js
+│   │   └── index.css
 │   ├── tailwind.config.js
-│   ├── postcss.config.js
 │   └── package.json
 ├── README.md
 └── .gitignore
+```
 
-🛠️ Local Setup
-1. Install MongoDB
+## Local Development Setup
 
-MongoDB installation guide:
-https://www.mongodb.com/docs/manual/installation/
-
-2. Clone & Install Dependencies
-git clone <your-repo-ssh-url>
+```bash
+# 1. Clone the repo
+git clone https://github.com/yourusername/Url-Shortner.git
 cd Url-Shortner
+
+# 2. Install dependencies (both frontend & backend)
 npm run install:all
+# (or manually: cd backend && npm i ; cd ../client && npm i)
 
+# 3. Create backend/.env (copy from example)
+cp backend/.env.example backend/.env
+```
 
-(install:all should install backend + client packages.)
+### Required Environment Variables (`backend/.env`)
+```env
+PORT=8000
+MONGODB_URI=your_mongodb_atlas_uri
+JWT_SECRET=your_strong_secret_here
+GEMINI_API_KEY=your_google_gemini_api_key
+BASE_URL=http://localhost:5173
+```
 
-3. Environment Variables
-
-Create a file:
-
-backend/.env
-
-
-Add:
-
-MONGODB_URI=
-JWT_SECRET=
-GEMINI_API_KEY=
-BASE_URL=http://localhost:8000
-
-
-⚠️ .env is NOT pushed to Git.
-It is protected via .gitignore + removed using:
-git rm --cached backend/.env
-
-4. Start Development
+### Run in development
+```bash
 npm run dev
+# → Backend: http://localhost:8000
+# → Frontend: http://localhost:5173
+```
 
+## Production Deployment
 
-Backend → localhost:8000
-
-Frontend → localhost:5173
-
-5. Test the App
-
-Signup → Login
-
-Shorten URLs
-
-Scan QR or open short links → watch analytics update in real time
-
-Upgrade to Pro → test AI traffic summaries
-
-📡 API Endpoints
-Method	Endpoint	Description	Auth
-POST	/api/user	Signup	❌
-POST	/api/user/login	Login	❌
-GET	/api/dashboard	Fetch user URLs + stats	✅ JWT
-POST	/api/url/shorten	Create short URL	✅ JWT + tier limit
-GET	/api/url/analytics/:id	Click analytics	✅ JWT
-POST	/api/ai/summary	AI-generated insight	🔒 Pro + JWT
-🖼️ Screenshots
-
-Place screenshots inside /screenshots folder.
-
-![Landing](screenshots/landing.png)
-![Dashboard](screenshots/dashboard.png)
-
-🚀 Deploy
-Frontend — Vercel
+**Frontend (Vercel)**
+```bash
 cd client
 npm run build
+```
+Then deploy the `client/dist` folder to Vercel (auto-detected).
 
+**Backend (Render / Railway)**
+1. Push code to GitHub
+2. Create new Web Service on Render
+3. Set the same environment variables as above
+4. Build command: `npm install`
+5. Start command: `node backend/server.js`
 
-Upload build → or import Git repo → deploy.
+**Important**: Never commit `backend/.env` → it's already ignored via `.gitignore`
 
-Backend — Render / Railway
+## API Endpoints (selected)
 
-Push repository
+| Method | Endpoint                  | Description                  | Auth Required       |
+|--------|---------------------------|------------------------------|---------------------|
+| POST   | `/api/user/register`      | Signup                       | –                   |
+| POST   | `/api/user/login`         | Login                        | –                   |
+| GET    | `/api/dashboard`          | User URLs + stats            | JWT                 |
+| POST   | `/api/url/shorten`        | Create short URL             | JWT + plan limit    |
+| GET    | `/api/url/analytics/:id`  | Detailed analytics           | JWT                 |
+| POST   | `/api/ai/summary`         | Gemini AI traffic summary    | Pro JWT only        |
 
-Create new Web Service
-
-Add environment variables (MONGODB_URI, JWT_SECRET, GEMINI_API_KEY)
-
-Deploy
-
-🔐 How to Avoid Pushing .env (IMPORTANT)
-
-Add to .gitignore:
-
-backend/.env
-
-
-Remove from Git tracking:
-
-git rm --cached backend/.env
-
-
-Commit:
-
-git commit -m "Remove .env from tracking"
